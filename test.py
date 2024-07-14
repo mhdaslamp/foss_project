@@ -9,7 +9,7 @@ from collections import defaultdict
 
 # Database connection
 conn = psycopg2.connect(
-    database="bus",
+    database="ticket",
     user="postgres",
     password="aslam123",
     host="localhost",
@@ -18,8 +18,9 @@ conn = psycopg2.connect(
 cursor = conn.cursor()
 
 # Constants
-DETECTION_LIMIT = 100  # Number of detections required
+DETECTION_LIMIT = 50  # Number of detections required
 TIME_LIMIT_HOURS = 3  # Time limit in hours
+wallet = 100
 
 # Variables
 face_counters = defaultdict(int)
@@ -57,7 +58,11 @@ while True:
             output = knn.predict(resized_img)
             detected_admno = output[0]
 
-            cv2.putText(frame, str(detected_admno), (x, y-15), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 2)
+
+            cursor.execute("SELECT name FROM busapp_student WHERE adm_no = %s", (detected_admno,))
+            name = cursor.fetchone()
+
+            cv2.putText(frame, str(name), (x, y-15), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 2)
             cv2.rectangle(frame, (x, y), (x+w, y+h), (50, 50, 255), 1)
             
 
@@ -67,14 +72,47 @@ while True:
                 current_time = datetime.now()
                 if current_time - last_attendance_time[detected_admno] >= timedelta(hours=TIME_LIMIT_HOURS):
                     # Insert attendance record into PostgreSQL
+                    
+                    cursor.execute("SELECT amount FROM busapp_student WHERE adm_no = %s", (detected_admno,))
+                
+                    result = cursor.fetchone()
+
+                    
+
+
+                  
+                    if result:
+                        amount = result[0]
+                        wallet = wallet-amount
+                    else:
+                        print("No matching record found")
+
+                    
+                    
+
+
                     time_stamp = current_time.strftime("%Y-%m-%d %H:%M:%S")
-                    sql = "UPDATE data SET time_stamp = %s WHERE adm_no = %s"
-                    val = (time_stamp, detected_admno)
+                    sql = "UPDATE busapp_student SET value = %s WHERE adm_no = %s"
+                    val = (wallet, detected_admno)
                     cursor.execute(sql, val)
                     conn.commit()
 
-                    print(f"Ticket taken for {detected_admno} at {time_stamp}")
+                
+                    print(f"Ticket taken for {name} at {time_stamp}")
+                    print('Wallet Balance : ',wallet)
 
+
+
+
+                    sql = "UPDATE busapp_student SET time_stamp = %s WHERE adm_no = %s"
+                    val = (time_stamp, detected_admno)
+                    cursor.execute(sql, val)
+                    conn.commit()
+                    
+                
+
+
+            
                     # Reset counter and update the last attendance time for the detected name
                     face_counters[detected_admno] = 0
                     last_attendance_time[detected_admno] = current_time

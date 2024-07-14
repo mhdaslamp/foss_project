@@ -53,7 +53,7 @@ if checking_reg_no_exist == 0:
         cv2.putText(frame, str(len(faces_data)), (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (50, 50, 255), 1)
         cv2.putText(frame, "Recording face, please wait", (0, 400), cv2.FONT_HERSHEY_TRIPLEX, 1, (50, 50, 255), 1)
         cv2.putText(frame, "util count become 100", (0, 450), cv2.FONT_HERSHEY_TRIPLEX, 1, (50, 50, 255), 1)
-        cv2.putText(frame, "press 'Q' to exit", (5, 0), cv2.FONT_HERSHEY_TaRIPLEX, 1, (50, 50, 255), 1)
+        cv2.putText(frame, "press 'Q' to exit", (5, 0), cv2.FONT_ITALIC, 1, (50, 50, 255), 1)
 
         # Showing the webcam 
         cv2.imshow("Frame", frame)
@@ -61,7 +61,7 @@ if checking_reg_no_exist == 0:
 
         # Quit cam while pressing 'q' or when 100 images are collecqqted
         k = cv2.waitKey(1)
-        A
+        
         if k == ord('q'):
             break
 

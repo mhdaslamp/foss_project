@@ -19,4 +19,10 @@ def main():
 
 
 if __name__ == '__main__':
+    print(sys.argv)
+    # sys.argv.append("runserver")
+    # sys.exit(0)
+    change = False
+    if change:
+        sys.argv = ['manage.py', 'runserver']
     main()

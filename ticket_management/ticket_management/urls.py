@@ -19,16 +19,20 @@ from django.conf import settings
 from busportal import views
 from django.urls import path
 from django.conf.urls.static import static
+from busportal.views import login_view
+from busportal.views import user_details_view
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/',views.login)
     path('login/', login_view, name='login'),
+    #path('portal/', bus_portal_view, name='bus_portal'),
+    path('user_details/', user_details_view, name='user_details'),
 
-    path('auth/', include('django.contrib.auth.urls')),
 ]
 
+LOGIN_REDIRECT_URL = 'profile'
 
 
 if settings.DEBUG:

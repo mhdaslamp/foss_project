@@ -42,7 +42,7 @@ input {
 button {
     width: 100%;
     padding: 10px;
-    background: #007bff;
+    background: #55e046;
     border: none;
     border-radius: 4px;
     color: white;
@@ -51,5 +51,5 @@ button {
 }
 
 button:hover {
-    background: #0056b3;
+    background: #55e046;
 }

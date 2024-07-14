@@ -8,7 +8,7 @@ import psycopg2
 
 # Database connection parameters
 db_params = {
-    'dbname': 'bus',
+    'dbname': 'ticket',
     'user': 'postgres',
     'password': 'aslam123',
     'host': 'localhost',
@@ -24,14 +24,14 @@ def connect_to_db():
         print(f"Unable to connect to the database: {e}")
         return None
 
-def insert_data(conn, name, adm_no, amount):
+def insert_data(conn, name, adm_no, amount,place):
     try:
         with conn.cursor() as cursor:
             insert_query = """
-            INSERT INTO data (name, adm_no, amount)
-            VALUES (%s, %s, %s);
+            INSERT INTO busapp_student (name, adm_no, amount,place)
+            VALUES (%s, %s, %s,%s);
             """
-            cursor.execute(insert_query, (name, adm_no, amount))
+            cursor.execute(insert_query, (name, adm_no, amount,place))
             conn.commit()
             print("Data inserted successfully!")
     except Exception as e:
@@ -42,7 +42,7 @@ def check_reg_no_exists(conn, reg_no):
     with conn.cursor() as cur:
         query = """
         SELECT COUNT(*)
-        FROM data
+        FROM busapp_student
         WHERE adm_no = %s;
         """
         cur.execute(query, (reg_no,))
@@ -62,17 +62,21 @@ if not os.path.exists('data'):
 
 name = input("Enter your Name: ")
 reg_no = input("Enter your admission no: ")
+#password = input("Set a Password for your Accont (8-digit)")
 stop = input("\nAvailable services from college \n\n Cherpulassery [code : CPY] : 3Rs/trip\n Pattambi [code : PTB] : 5Rs/trip \n Shornur [code : SHR] : 10Rs/trip\n \n Enter your Place code : " )
 stop = stop.upper()
 
 while True:
     if stop == "CPY":
         amount = 3
+        place = 'Cherpulassery'
         break
     elif stop == "PTB":
         amount = 5
+        place = 'Pattambi'
         break
     elif stop == "SHR":
+        place = 'Shornur'
         amount = 10
         break
     else:
@@ -112,7 +116,7 @@ if conn:
 
             if len(faces_data) == 100:
                 print("Image captured successfully.")
-                insert_data(conn, name, reg_no, amount)
+                insert_data(conn, name, reg_no, amount,place)
                 break
 
         video.release()

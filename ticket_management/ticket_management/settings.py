@@ -124,3 +124,26 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bus',
+        'USER': 'postgres',
+        'PASSWORD': 'aslam123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+
+
+AUTHENTICATION_BACKENDS = [
+    'busportal.backend.AdmNoAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+AUTH_USER_MODEL = 'busportal.CustomUser'

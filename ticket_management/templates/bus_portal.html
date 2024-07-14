@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEC Palakkad Bus Portal</title>
+    <link rel="stylesheet" href="portalcss.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2>Welcome, {{ name }}</h2>
+            <h1>GEC Palakkad Bus Portal</h1>
+        </header>
+
+        <section class="student-details">
+            <h2>Student Details</h2>
+            <p>Name: {{ name }}</p>
+            <p>Admission Number: {{ adm_no }}</p>
+        </section>
+
+        <section class="bus-stop-details">
+            <h2>Bus Stop Details</h2>
+            <p>Bus Stop: {{ place }}</p>
+            <p>Bus Number: 6</p>
+            <p>Timing: 8:00 AM</p>
+        </section>
+
+        <section class="wallet-details">
+            <h2>Wallet Details</h2>
+            <p>Current Balance: ₹500</p>
+        </section>
+    </div>
+</body>
+</html>
