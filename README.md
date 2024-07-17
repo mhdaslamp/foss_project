@@ -1,4 +1,6 @@
 
+demo video : https://drive.google.com/file/d/1h3zqsyI1vIecMBN38JFSbDfk5gmHwn4O/view?usp=sharing
+
 College Bus Auto-Ticketing App
 
 A system to manage bus ticketing for college students using face recognition technology. The project includes three main modules: capturing student data, detecting faces, developed using OpenCV, Python, and SQL.
