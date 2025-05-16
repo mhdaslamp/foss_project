@@ -55,18 +55,6 @@ for connecting PostgreSQL database install 'psycopg2'
 pip install psycopg2-binary
 
 
-As this project uses PostgreSQL database you need to set up the Data base in the code 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ticket',
-        'USER': 'foss project',
-        'PASSWORD': 'foss123',
-        'HOST': '192.168.1.10',  
-        'PORT': '5432',
-    }
-}
 
 
 
